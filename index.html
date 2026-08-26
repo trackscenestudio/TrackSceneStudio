@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trackscene Studio — Video & Audio Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E0F0C;
+    --bg-raised:#17180F;
+    --panel-line:#2A2C1F;
+    --text:#EDE9DE;
+    --text-dim:#9C9A8C;
+    --amber:#E8A33D;
+    --teal:#4FA8A0;
+    --red:#C1453D;
+    --track-video:#1B2A2C;
+    --track-audio:#241F17;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif;}
+
+  /* ---- Timeline ruler, top of page ---- */
+  .ruler{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 5vw;
+    border-bottom:1px solid var(--panel-line);
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--text-dim);
+  }
+  .ruler .rec{
+    display:flex; align-items:center; gap:6px;
+    color:var(--red);
+  }
+  .rec .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--red);
+    animation:blink 1.6s infinite;
+  }
+  @keyframes blink{0%,60%{opacity:1;}30%{opacity:0.25;}}
+
+  /* ---- Hero ---- */
+  .hero{
+    padding:14vh 5vw 10vh;
+    max-width:980px;
+  }
+  .hero .eyebrow{
+    color:var(--amber);
+    font-size:13px;
+    letter-spacing:0.08em;
+    margin-bottom:22px;
+    display:block;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4.6rem);
+    font-weight:600;
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    max-width:14ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--teal);
+  }
+  .hero p{
+    margin-top:28px;
+    max-width:52ch;
+    color:var(--text-dim);
+    font-size:1.05rem;
+  }
+
+  /* scrubber under hero: jump nav styled as a playhead bar */
+  .scrubber{
+    margin-top:60px;
+    position:relative;
+    height:46px;
+    border-top:1px solid var(--panel-line);
+    border-bottom:1px solid var(--panel-line);
+    display:flex;
+    align-items:center;
+  }
+  .scrubber a{
+    color:var(--text-dim);
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:0.05em;
+    padding:0 22px;
+    border-right:1px solid var(--panel-line);
+    height:100%;
+    display:flex;
+    align-items:center;
+    transition:color .2s;
+  }
+  .scrubber a:first-child{padding-left:0;}
+  .scrubber a:hover{color:var(--amber);}
+  .scrubber a::before{
+    content:"▸ ";
+    color:var(--teal);
+  }
+
+  /* ---- Section shell ---- */
+  section.track{
+    padding:9vh 5vw;
+    border-bottom:1px solid var(--panel-line);
+  }
+  .track-header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:6vh;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .track-header .label{
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:0.1em;
+  }
+  .track-header h2{
+    font-size:clamp(1.6rem, 3.4vw, 2.4rem);
+    font-weight:600;
+    margin-top:6px;
+  }
+  .track-header .timecode{
+    font-size:12px;
+    color:var(--text-dim);
+  }
+
+  /* ---- Video track ---- */
+  #video-track{background:linear-gradient(180deg, var(--track-video) 0%, var(--bg) 340px);}
+  .clip-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:28px;
+  }
+  .clip{
+    background:var(--bg-raised);
+    border:1px solid var(--panel-line);
+    border-radius:2px;
+  }
+  .clip .frame{
+    aspect-ratio:16/9;
+    background:#000;
+    position:relative;
+  }
+  .clip .frame iframe{width:100%; height:100%; border:0; display:block;}
+  .clip .meta{
+    padding:18px 20px 22px;
+  }
+  .clip .meta .clip-id{
+    color:var(--amber);
+    font-size:11px;
+    letter-spacing:0.08em;
+    display:block;
+    margin-bottom:8px;
+  }
+  .clip .meta h3{font-size:1.05rem; font-weight:600;}
+  .clip .meta p{color:var(--text-dim); font-size:0.9rem; margin-top:8px;}
+
+  /* ---- Audio track: A/B comparator ---- */
+  #audio-track{background:linear-gradient(180deg, var(--track-audio) 0%, var(--bg) 340px);}
+  .ab-list{display:flex; flex-direction:column; gap:22px;}
+  .ab-item{
+    background:var(--bg-raised);
+    border:1px solid var(--panel-line);
+    border-radius:2px;
+    padding:26px 28px;
+  }
+  .ab-item .ab-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .ab-item h3{font-size:1.05rem; font-weight:600;}
+  .ab-item .ab-tag{font-size:11px; color:var(--text-dim); letter-spacing:0.05em;}
+  .ab-rows{display:grid; grid-template-columns:80px 1fr; row-gap:14px; align-items:center;}
+  .ab-rows .ab-label{
+    font-size:11px;
+    letter-spacing:0.08em;
+  }
+  .ab-rows .ab-label.raw{color:var(--red);}
+  .ab-rows .ab-label.treated{color:var(--teal);}
+  .ab-rows audio{width:100%; height:34px; filter:invert(0.88) sepia(0.1) hue-rotate(340deg);}
+
+  /* ---- Contact / outro ---- */
+  #contact{
+    padding:12vh 5vw 16vh;
+    max-width:760px;
+  }
+  #contact .label{font-size:11px; color:var(--text-dim); letter-spacing:0.1em; margin-bottom:18px; display:block;}
+  #contact h2{
+    font-size:clamp(1.8rem, 4vw, 2.8rem);
+    font-weight:600;
+    line-height:1.15;
+    margin-bottom:36px;
+  }
+  #contact h2 span{color:var(--amber);}
+  .contact-links{display:flex; flex-wrap:wrap; gap:16px;}
+  .contact-links a{
+    color:var(--text);
+    text-decoration:none;
+    font-size:0.95rem;
+    padding:14px 24px;
+    border:1px solid var(--panel-line);
+    border-radius:2px;
+    transition:border-color .2s, color .2s;
+  }
+  .contact-links a:hover{border-color:var(--amber); color:var(--amber);}
+
+  footer{
+    padding:24px 5vw;
+    font-size:11px;
+    color:var(--text-dim);
+    display:flex;
+    justify-content:space-between;
+    letter-spacing:0.05em;
+  }
+
+  @media (max-width:640px){
+    .ruler{flex-direction:column; gap:6px;}
+    .ab-rows{grid-template-columns:60px 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ruler">
+  <span class="mono">TRACKSCENE_STUDIO.PROJ</span>
+  <span class="rec"><span class="dot"></span> <span class="mono">REC 00:00:00:00</span></span>
+</div>
+
+<header class="hero">
+  <span class="eyebrow mono">TRACKSCENE STUDIO — VIDEO EDITOR — AUDIO POST</span>
+  <h1>Monto storie che <em>si vedono</em> e si <em>ascoltano</em> diverse.</h1>
+  <p>
+    Video pubblicitari diretti e montati da zero, e post-produzione audio per podcast:
+    dal voice-over grezzo a un suono pronto per essere pubblicato.
+    Sotto, il lavoro — non le parole.
+  </p>
+  <nav class="scrubber">
+    <a href="#video-track">Video</a>
+    <a href="#audio-track">Audio</a>
+    <a href="#contact">Contatti</a>
+  </nav>
+</header>
+
+<section class="track" id="video-track">
+  <div class="track-header">
+    <div>
+      <span class="label mono">TRACK 01 — VIDEO</span>
+      <h2>Video pubblicitari</h2>
+    </div>
+    <span class="timecode mono">3 CLIP</span>
+  </div>
+
+  <div class="clip-grid">
+
+    <!-- CLIP 1: sostituisci YOUTUBE_ID_1 con l'ID del video (es. da youtube.com/watch?v=XXXXX prendi XXXXX) -->
+    <article class="clip">
+      <div class="frame">
+        <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_1" title="Video pubblicitario 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="meta">
+        <span class="clip-id mono">CLIP_01</span>
+        <h3>Titolo video 1</h3>
+        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito (ripresa, montaggio, color, sound design).</p>
+      </div>
+    </article>
+
+    <!-- CLIP 2: sostituisci YOUTUBE_ID_2 -->
+    <article class="clip">
+      <div class="frame">
+        <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_2" title="Video pubblicitario 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="meta">
+        <span class="clip-id mono">CLIP_02</span>
+        <h3>Titolo video 2</h3>
+        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito.</p>
+      </div>
+    </article>
+
+    <!-- CLIP 3: sostituisci YOUTUBE_ID_3 -->
+    <article class="clip">
+      <div class="frame">
+        <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_3" title="Video pubblicitario 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="meta">
+        <span class="clip-id mono">CLIP_03</span>
+        <h3>Titolo video 3</h3>
+        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="track" id="audio-track">
+  <div class="track-header">
+    <div>
+      <span class="label mono">TRACK 02 — AUDIO</span>
+      <h2>Voice-over: grezzo vs trattato</h2>
+    </div>
+    <span class="timecode mono">3 CONFRONTI</span>
+  </div>
+
+  <div class="ab-list">
+
+    <!-- CONFRONTO 1: sostituisci i due src con il path/URL dei tuoi file audio (mp3/wav) -->
+    <article class="ab-item">
+      <div class="ab-title">
+        <h3>Confronto 1</h3>
+        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT</span>
+      </div>
+      <div class="ab-rows">
+        <span class="ab-label raw mono">GREZZO</span>
+        <audio controls src="audio/confronto1_raw.mp3"></audio>
+        <span class="ab-label treated mono">TRATTATO</span>
+        <audio controls src="audio/confronto1_treated.mp3"></audio>
+      </div>
+    </article>
+
+    <!-- CONFRONTO 2 -->
+    <article class="ab-item">
+      <div class="ab-title">
+        <h3>Confronto 2</h3>
+        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT</span>
+      </div>
+      <div class="ab-rows">
+        <span class="ab-label raw mono">GREZZO</span>
+        <audio controls src="audio/confronto2_raw.mp3"></audio>
+        <span class="ab-label treated mono">TRATTATO</span>
+        <audio controls src="audio/confronto2_treated.mp3"></audio>
+      </div>
+    </article>
+
+    <!-- CONFRONTO 3 -->
+    <article class="ab-item">
+      <div class="ab-title">
+        <h3>Confronto 3</h3>
+        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT</span>
+      </div>
+      <div class="ab-rows">
+        <span class="ab-label raw mono">GREZZO</span>
+        <audio controls src="audio/confronto3_raw.mp3"></audio>
+        <span class="ab-label treated mono">TRATTATO</span>
+        <audio controls src="audio/confronto3_treated.mp3"></audio>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="contact">
+  <span class="label mono">TRACK 03 — OUTPUT</span>
+  <h2>Hai un video o un podcast che merita <span>di suonare meglio</span>?</h2>
+  <div class="contact-links">
+    <a href="mailto:tuamail@esempio.com">Email</a>
+    <a href="https://instagram.com/tuoaccount" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://wa.me/39XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <span class="mono">TRACKSCENE STUDIO · Marco De Maria</span>
+  <span class="mono">BELLARIA IGEA MARINA · 2026</span>
+</footer>
+
+</body>
+</html>
