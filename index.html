@@ -170,6 +170,14 @@
   }
   .clip .meta h3{font-size:1.05rem; font-weight:600;}
   .clip .meta p{color:var(--text-dim); font-size:0.9rem; margin-top:8px;}
+  .clip .meta ul{
+    margin-top:12px;
+    padding-left:18px;
+    color:var(--text-dim);
+    font-size:0.9rem;
+  }
+  .clip .meta ul li{margin-top:6px;}
+  .clip .meta ul li::marker{color:var(--teal);}
 
   /* ---- Audio track: A/B comparator ---- */
   #audio-track{background:linear-gradient(180deg, var(--track-audio) 0%, var(--bg) 340px);}
@@ -275,12 +283,18 @@
     <!-- CLIP 1: sostituisci YOUTUBE_ID_1 con l'ID del video (es. da youtube.com/watch?v=XXXXX prendi XXXXX) -->
     <article class="clip">
       <div class="frame">
-        <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_1" title="Video pubblicitario 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/R1MpijWTWdE" title="Reel promozionale Sneaker" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="meta">
         <span class="clip-id mono">CLIP_01</span>
-        <h3>Titolo video 1</h3>
-        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito (ripresa, montaggio, color, sound design).</p>
+        <h3>Reel promozionale Sneaker</h3>
+        <p>Reel promozionale per una Sneaker, realizzato interamente da Trackscene Studio. Il video nasce da fotografie reali del prodotto, animate tramite intelligenza artificiale per creare movimento e dinamismo senza bisogno di uno shooting video tradizionale. La colonna sonora è stata scritta, generata e poi trattata in post-produzione (EQ, compressione, de-essing) per un risultato pulito e professionale, pronto per la pubblicazione.</p>
+        <ul>
+          <li>Animazione immagini prodotto tramite AI</li>
+          <li>Scrittura e sincronizzazione voiceover</li>
+          <li>Editing audio e sound design</li>
+          <li>Montaggio e ritmo del video</li>
+        </ul>
       </div>
     </article>
 
