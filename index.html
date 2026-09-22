@@ -207,6 +207,36 @@
   .ab-rows .ab-label.treated{color:var(--teal);}
   .ab-rows audio{width:100%; height:34px; filter:invert(0.88) sepia(0.1) hue-rotate(340deg);}
 
+  /* ---- Music track: own audio tracks ---- */
+  #music-track{background:linear-gradient(180deg, var(--track-audio) 0%, var(--bg) 340px);}
+  .track-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:24px;
+  }
+  .track-card{
+    background:var(--bg-raised);
+    border:1px solid var(--panel-line);
+    border-radius:2px;
+    padding:22px 24px;
+  }
+  .track-card .track-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:6px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .track-card h3{font-size:1.02rem; font-weight:600;}
+  .track-card .track-tag{font-size:11px; color:var(--text-dim); letter-spacing:0.05em;}
+  .track-card audio{
+    width:100%;
+    height:34px;
+    margin-top:14px;
+    filter:invert(0.88) sepia(0.1) hue-rotate(340deg);
+  }
+
   /* ---- Contact / outro ---- */
   #contact{
     padding:12vh 5vw 16vh;
@@ -265,6 +295,7 @@
   <nav class="scrubber">
     <a href="#video-track">Video</a>
     <a href="#audio-track">Audio</a>
+    <a href="#music-track">Musica</a>
     <a href="#contact">Contatti</a>
   </nav>
 </header>
@@ -275,7 +306,7 @@
       <span class="label mono">TRACK 01 — VIDEO</span>
       <h2>Video pubblicitari</h2>
     </div>
-    <span class="timecode mono">4 CLIP</span>
+    <span class="timecode mono">5 CLIP</span>
   </div>
 
   <div class="clip-grid">
@@ -298,39 +329,63 @@
       </div>
     </article>
 
-    <!-- CLIP 2: sostituisci YOUTUBE_ID_2 -->
+    <!-- CLIP 2 -->
     <article class="clip">
       <div class="frame">
-        <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_2" title="Video pubblicitario 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/NCbVN5HuLBE" title="Case study — L'Accenditore di Lampioni" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="meta">
         <span class="clip-id mono">CLIP_02</span>
-        <h3>Titolo video 2</h3>
-        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito.</p>
+        <h3>Case study — L'Accenditore di Lampioni</h3>
+        <p>Cortometraggio-metafora realizzato per mostrare il workflow completo di Trackscene Studio: storyboard, color grading, editing audio, sound design, montaggio.</p>
       </div>
     </article>
 
     <!-- CLIP 3: sostituisci YOUTUBE_ID_3 -->
     <article class="clip">
       <div class="frame">
-        <iframe src="https://www.youtube.com/embed/Rc4MiITEX24" title="Video pubblicitario 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/Rc4MiITEX24" title="Reel promozionale prodotto" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="meta">
         <span class="clip-id mono">CLIP_03</span>
-        <h3>Titolo video 3</h3>
-        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito.</p>
+        <h3>Reel promozionale prodotto</h3>
+        <p>Reel promozionale realizzato interamente da Trackscene Studio. Il video nasce da fotografie reali del prodotto, animate tramite intelligenza artificiale per creare movimento e dinamismo senza bisogno di uno shooting video tradizionale. La musica di sottofondo è stata scritta, generata e poi trattata in post-produzione (EQ, compressione, de-essing) per un risultato pulito e professionale, pronto per la pubblicazione.</p>
+        <ul>
+          <li>Animazione immagini prodotto tramite AI</li>
+          <li>Scrittura e sincronizzazione voiceover</li>
+          <li>Editing audio e sound design</li>
+          <li>Montaggio e ritmo del video</li>
+        </ul>
       </div>
     </article>
 
     <!-- CLIP 4: sostituisci YOUTUBE_ID_4 -->
     <article class="clip">
       <div class="frame">
-        <iframe src="https://www.youtube.com/embed/YOUTUBE_ID_4" title="Video pubblicitario 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/oVqWCe58bzc" title="Reel promozionale borsa in pelle" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="meta">
         <span class="clip-id mono">CLIP_04</span>
-        <h3>Titolo video 4</h3>
-        <p>Breve nota: settore del cliente, obiettivo dello spot, cosa hai gestito.</p>
+        <h3>Reel promozionale borsa in pelle — animazione AI, voiceover e sound design | Trackscene Studio</h3>
+        <p>Reel promozionale per un accessorio in pelle, realizzato interamente da Trackscene Studio. Il video nasce da fotografie reali del prodotto, animate tramite intelligenza artificiale per creare movimento e dinamismo senza bisogno di uno shooting video tradizionale. Il voiceover è stato scritto, generato e poi trattato in post-produzione (EQ, compressione, de-essing) per un risultato pulito e professionale, pronto per la pubblicazione.</p>
+        <ul>
+          <li>Animazione immagini prodotto tramite AI</li>
+          <li>Scrittura e sincronizzazione voiceover</li>
+          <li>Editing audio e sound design</li>
+          <li>Montaggio e ritmo del video</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- CLIP 5: sostituisci YOUTUBE_ID_5 -->
+    <article class="clip">
+      <div class="frame">
+        <iframe src="https://www.youtube.com/embed/hpiIWm0ot44" title="Videoclip musicale" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="meta">
+        <span class="clip-id mono">CLIP_05</span>
+        <h3>Videoclip musicale</h3>
+        <p>Videoclip musicale creato usando Kling AI, CapCut e DaVinci Resolve.</p>
       </div>
     </article>
 
@@ -352,7 +407,7 @@
     <article class="ab-item">
       <div class="ab-title">
         <h3>Confronto 1</h3>
-        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT</span>
+        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT · RIDUZIONE RUMORE DI FONDO</span>
       </div>
       <div class="ab-rows">
         <span class="ab-label raw mono">GREZZO</span>
@@ -366,7 +421,7 @@
     <article class="ab-item">
       <div class="ab-title">
         <h3>Confronto 2</h3>
-        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT</span>
+        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT · RIDUZIONE RUMORE DI FONDO</span>
       </div>
       <div class="ab-rows">
         <span class="ab-label raw mono">GREZZO</span>
@@ -380,7 +435,7 @@
     <article class="ab-item">
       <div class="ab-title">
         <h3>Confronto 3</h3>
-        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT</span>
+        <span class="ab-tag mono">EQ · DE-ESS · COMP · LIMIT · RIDUZIONE RUMORE DI FONDO</span>
       </div>
       <div class="ab-rows">
         <span class="ab-label raw mono">GREZZO</span>
@@ -393,8 +448,58 @@
   </div>
 </section>
 
+<section class="track" id="music-track">
+  <div class="track-header">
+    <div>
+      <span class="label mono">TRACK 03 — MUSICA</span>
+      <h2>Le mie tracce Produzione Mix e master</h2>
+    </div>
+    <span class="timecode mono">4 TRACCE</span>
+  </div>
+
+  <div class="track-grid">
+
+    <!-- TRACCIA 1: sostituisci il src con il path/URL del tuo file audio -->
+    <article class="track-card">
+      <div class="track-title">
+        <h3>Titolo traccia 1</h3>
+        <span class="track-tag mono">ROCK DRUM AND BASS</span>
+      </div>
+      <audio controls src="audio/traccia1.mp3"></audio>
+    </article>
+
+    <!-- TRACCIA 2 -->
+    <article class="track-card">
+      <div class="track-title">
+        <h3>Titolo traccia 2</h3>
+        <span class="track-tag mono">DEEP HOUSE</span>
+      </div>
+      <audio controls src="audio/traccia2.mp3"></audio>
+    </article>
+
+    <!-- TRACCIA 3 -->
+    <article class="track-card">
+      <div class="track-title">
+        <h3>Titolo traccia 3</h3>
+        <span class="track-tag mono">AMBIENT MEDITATION</span>
+      </div>
+      <audio controls src="audio/traccia3.mp3"></audio>
+    </article>
+
+    <!-- TRACCIA 4 -->
+    <article class="track-card">
+      <div class="track-title">
+        <h3>Titolo traccia 4</h3>
+        <span class="track-tag mono">TECH HOUSE</span>
+      </div>
+      <audio controls src="audio/traccia4.mp3"></audio>
+    </article>
+
+  </div>
+</section>
+
 <section id="contact">
-  <span class="label mono">TRACK 03 — OUTPUT</span>
+  <span class="label mono">TRACK 04 — OUTPUT</span>
   <h2>Hai un video o un podcast che merita <span>di suonare meglio</span>?</h2>
   <div class="contact-links">
     <a href="mailto:trackscenestudio@gmail.com">Email</a>
